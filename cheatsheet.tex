@@ -104,6 +104,7 @@
   \item \texttt{cargo new --lib mylib} -- Create new library crate
   \item \texttt{cargo new --bin myproj} -- Create new binary project
   \item \texttt{cargo add <crate>} -- Add dependency
+  \item \texttt{cargo add --dev <crate>} -- Add dev-dependency
   \item \texttt{cargo check} -- Check code without building
   \item \texttt{cargo clippy} -- Lint code
   \item \texttt{cargo doc --open} -- Generate and open docs
@@ -147,6 +148,7 @@ rustc main.rs
 \end{itemize}
 
 \section{Variables and Types}
+
 \begin{Code}
 fn main() {
 
@@ -172,6 +174,23 @@ fn main() {
 
 }
 \end{Code}
+
+\subsection{Integer Types Overview}
+\begin{itemize}
+    \item \textbf{Fixed-size types:} \texttt{u8/i8}, \texttt{u16/i16}, \texttt{u32/i32}, \texttt{u64/i64}, \texttt{u128/i128}
+    \item \textbf{Pointer-sized types:}
+    \begin{itemize}
+        \item \texttt{usize}: Unsigned, size depends on architecture (4 bytes on 32-bit, 8 bytes on 64-bit)
+        \item \texttt{isize}: Signed, same size rules as \texttt{usize}
+    \end{itemize}
+    \item \textbf{Use cases:}
+    \begin{itemize}
+        \item Use \texttt{usize/isize} for indexing collections and representing memory sizes
+        \item Use fixed-size types (\texttt{u32/i32}, \texttt{u64/i64}) for precise control over value ranges
+        \item \texttt{u64} is always 8 bytes, similar to \texttt{usize} on 64-bit systems
+    \end{itemize}
+\end{itemize}
+
 \subsection{Mutability}
 \begin{Code}
 fn main() {
