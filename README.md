@@ -1,41 +1,118 @@
-MyRs Cheat Sheet (LaTeX)
-========================
+# MyRs Cheat Sheet 🤗
 
-Bu proje, A4 üzerinde dikey olarak ikiye bölünmüş (iki sütun) küçük puntolu bir "cheat sheet" düzeni sağlar. Kod blokları sütunlar arasında bölünmez.
+A comprehensive Rust programming language cheat sheet in LaTeX format, designed as a compact two-column reference guide.
 
-Hızlı Başlangıç
----------------
-- Derlemek için `MyRsCheatSheet` klasöründe:
-  - `make pdf` → `cheatsheet.pdf` üretir (iki sütun, tek sayfa düzeni).
-  - `make pdf-2up` → `two-up.pdf` üretir (1. sayfa solda, 2. sayfa sağda görünecek şekilde 2-up düzeni).
-- Sisteminizde `latexmk` yoksa `pdflatex` veya `tectonic` ile otomatik olarak derlenir.
+## 📋 Contents
 
-Düzen Ayrıntıları
------------------
-- İki sütunlu A4 (`extarticle[8pt, a4paper, twocolumn]`).
-- Dar kenar boşlukları ve küçük yazı boyutu (8pt) ile yoğun bilgi için optimize.
-- `listings` yapılandırması ile kod bloklarında otomatik satır kırma (`breaklines=true`).
-- `Code` ortamı (\`samepage\`) sayesinde kod örnekleri diğer sütuna/sonraki sayfaya bölünmez.
+- **Basics**: Variables, types, mutability, shadowing
+- **Macros**: Declarative and procedural macros with examples
+- **Ownership & Borrowing**: Core Rust concepts
+- **Generics**: Functions, structs, and enums
+- **Traits**: Definitions, implementations, and trait bounds
+- **Lifetimes**: Annotations, elision rules, and static lifetimes
+- **Smart Pointers**: Box, Rc, and more
+- **Error Handling**: Result types and custom errors
+- **Cargo Commands**: Quick reference for common operations
 
-Nasıl Düzenlersiniz?
---------------------
-- İçeriği `cheatsheet.tex` dosyasında doğrudan düzenleyin.
-- Bölüm başlıkları ve listeler kısa ve yoğun olmalı (boşluklar azaltıldı).
-- Kod örnekleri için:
+## 🚀 Quick Start
 
+### Building the PDF
+
+In the `MyRsCheatSheet` directory:
+
+```bash
+make pdf          # Generates cheatsheet.pdf (two-column, single-page layout)
+make pdf-2up      # Generates two-up.pdf (page 1 on left, page 2 on right)
+make clean        # Remove auxiliary files
 ```
+
+### Requirements
+
+- **Recommended**: `latexmk` + `xelatex`
+- **Alternatives**: `pdflatex` or `tectonic`
+
+The build system automatically detects available LaTeX compilers.
+
+## 📐 Layout Details
+
+- **Format**: Two-column A4 (`extarticle[8pt, a4paper, twocolumn]`)
+- **Font**: 8pt for maximum information density
+- **Margins**: Narrow margins optimized for reference sheets
+- **Code Blocks**: Automatic line breaking with `listings` package
+- **No Split**: Code examples stay together (won't break across columns/pages)
+
+## ✏️ How to Edit
+
+1. Edit content directly in `cheatsheet.tex`
+2. Keep section titles and lists short and dense
+3. Use the `Code` environment for code examples:
+
+```latex
 \begin{Code}
-// Kodunuzu buraya yazın
+// Your Rust code here
+fn main() {
+    println!("Hello, world!");
+}
 \end{Code}
 ```
 
-Gerçek "Sol=Sayfa1, Sağ=Sayfa2" Görünümü
------------------------------------------
-- `two-up.pdf` dosyası, `cheatsheet.pdf` içeriğini sayfaları yan yana yerleştirerek (2-up) gösterir.
-- Yazıcıda “yan yana iki sayfa” baskısı için uygundur (broşür benzeri görünüm).
+## 🎨 Features
 
-Notlar
------
-- Türkçe heceleme ve karakterler için `babel[turkish]`, `inputenc[utf8]`, `fontenc[T1]` etkin.
-- Eğer `listings` içinde Rust anahtar kelimeleri tanınmazsa, dosyadaki Rust dil tanımı devreye girer (taşınabilirlik için eklendi).
+- ✅ **Auto-build on save** (with LaTeX Workshop in VS Code)
+- ✅ **SyncTeX support** (PDF ↔ code synchronization)
+- ✅ **Syntax highlighting** for Rust code
+- ✅ **Custom emojis** (TikZ-based hugging face 🤗)
+- ✅ **File naming conventions** with visual indicators (✓/✗)
 
+## 📄 Two-Up Layout
+
+The `two-up.pdf` displays pages side-by-side:
+- Perfect for printing as a booklet
+- Page 1 on left, Page 2 on right
+- Ideal for double-sided reference sheets
+
+## 🛠️ Project Structure
+
+```
+MyRsCheatSheet/
+├── cheatsheet.tex      # Main LaTeX source
+├── Makefile           # Build automation
+├── .latexmkrc         # LaTeX build configuration
+├── .gitignore         # Git ignore rules
+├── README.md          # This file
+└── cheatsheet.pdf     # Generated output
+```
+
+## 📦 Dependencies
+
+LaTeX packages used:
+- `geometry` - Page layout
+- `listings` - Code syntax highlighting
+- `xcolor` - Colors for code
+- `tikz` - Custom graphics (emoji)
+- `hyperref` - PDF links
+- `pifont` - Special symbols (✓/✗)
+
+## 🤝 Contributing
+
+Feel free to:
+- Report issues
+- Submit pull requests
+- Suggest new content
+- Improve existing examples
+
+## 📝 License
+
+This project is open source. Feel free to use, modify, and distribute.
+
+## 🎯 Tips
+
+- Use `Cmd/Ctrl + Click` in PDF to jump to source code (SyncTeX)
+- Use `Cmd/Ctrl + Alt + J` to jump from code to PDF location
+- Auto-build triggers on every save in VS Code
+- Keep code examples concise for better readability
+
+---
+
+**Author**: Yavuz Elcil  
+**Built with**: LaTeX, TikZ, and ❤️ for Rust
