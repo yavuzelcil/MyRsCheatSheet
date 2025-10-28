@@ -520,6 +520,53 @@ fn main() {
     // println!("{}", s1);  // error: s1 is no longer valid
     println!("x: {}, s2: {}", x, s2);
 } // x and s2 go out of scope here and memory is freed
+\end{Code}
+
+
+\subsection{String Type}
+\textbf{String Literals:} immutable, fixed-size, stored on stack, example:
+\begin{Code}    
+let s: &str = "Hello, world!"; // string slice (immutable)
+\end{Code}
+
+\textbf{String Type:} mutable, growable, stored on heap, example:
+\begin{Code}
+let mut s = String::from("Hello"); // String type (mutable)
+\end{Code}
+
+\subsection{Ownership and Scope}
+\begin{Code}
+fn main() {
+    {
+        let s = String::from("hello"); // s is valid here
+        println!("{}", s);
+    } // s goes out of scope and memory is freed here
+}
+\end{Code}
+
+\subsection{Move}
+\textbf{moving with integers:}
+\begin{Code}
+fn main() {
+    let x = 5;
+    let y = x; // x is moved to y - Copy trait for integers
+    // println!("{}", x); // error: x is no longer valid
+    println!("{}", y);
+}
+\end{Code}
+
+\textbf{moving with String:}
+\begin{Code}
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1; // s1 is moved to s2 - ownership transferred
+    // println!("{}", s1); // error: s1 is no longer valid
+    println!("{}", s2);
+}
+\end{Code}
+
+\textbf{Notes:} When you create a String, the actual string struct itself is stored on the stack, but the contents (the characters) are stored on the heap. When you move a String, you are transferring ownership of the heap data to the new variable.
+\textbf{Shallow Copy} means copying only the pointer to the data, not the data itself. In Rust, moving a String is like a shallow copy because the ownership of the heap data is transferred to the new variable, and the original variable can no longer access it.
 
 \section{Result and Error Handling}
 \begin{Code}
