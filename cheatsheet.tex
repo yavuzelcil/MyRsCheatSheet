@@ -616,6 +616,38 @@ fn main() {
 }
 \end{Code}
 
+\subsection{Passing Ownership to Functions}
+\begin{Code}
+fn takes_ownership(s: String) {
+    println!("{}", s);
+} // s goes out of scope and memory is freed here
+fn main() {
+    let s = String::from("hello");
+    takes_ownership(s); // ownership moved to function
+    // println!("{}", s); // error: s is no longer valid
+}
+\end{Code}
+\subsection{Returning Ownership from Functions}
+\begin{Code}
+fn gives_ownership() -> String {
+    let s = String::from("hello");
+    s // ownership moved to caller
+}
+
+fn takes_and_gives_back(s: String) -> String {
+    s // ownership moved back to caller
+}
+
+fn main() {
+    let s = gives_ownership(); // ownership moved to s
+
+    println!("{}", s);
+}
+\end{Code}
+
+\subsection{References and Borrowing}
+\texttt{Pointer} is a variable that stores the memory address of another variable. In Rust, references are a kind of pointer that allow you to borrow a value without taking ownership of it.
+
 \section{Result and Error Handling}
 \begin{Code}
 use std::fs::File;
