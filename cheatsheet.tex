@@ -587,6 +587,35 @@ fn main() {
 \textbf{Notes:} When you create a String, the actual string struct itself is stored on the stack, but the contents (the characters) are stored on the heap. When you move a String, you are transferring ownership of the heap data to the new variable.
 \textbf{Shallow Copy} means copying only the pointer to the data, not the data itself. In Rust, moving a String is like a shallow copy because the ownership of the heap data is transferred to the new variable, and the original variable can no longer access it.
 
+\subsection{Copy vs Clone}
+
+\begin{center}
+\begin{tabular}{|p{4cm}|p{4cm}|}
+\hline
+\textbf{\textcolor{orange!80!red}{Copy}} & \textbf{\textcolor{purple!60!blue}{Clone}} \\
+\hline
+The bits are copied exactly (\textbf{shallow copy}) & The actual data on the heap is duplicated (\textbf{deep copy}) \\
+\hline
+Only types that do not manage heap-allocated memory can implement Copy & Necessary for types that manage resources that need to be separately owned, like String \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Example:}
+\begin{Code}
+fn main() {
+    // Copy trait (implicit)
+    let x = 5;
+    let y = x; // x is copied to y
+    println!("x: {}, y: {}", x, y); // both valid
+    
+    // Clone trait (explicit)
+    let s1 = String::from("hello");
+    let s2 = s1.clone(); // explicit clone
+    println!("s1: {}, s2: {}", s1, s2); // both valid
+}
+\end{Code}
+
 \section{Result and Error Handling}
 \begin{Code}
 use std::fs::File;
