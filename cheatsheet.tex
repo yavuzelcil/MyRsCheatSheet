@@ -986,8 +986,17 @@ fn main() {
 \end{itemize}
 
 
-
-\section{Creating Custom Error Types}
+\section{Errors}
+\textbf{panic!} macro is used to indicate unrecoverable errors in Rust. When called, it stops the normal execution of the program and starts unwinding the stack, cleaning up resources along the way.
+\begin{Code}
+fn divide(a: i32, b: i32) -> i32 {
+    if b == 0 {
+        panic!("Division by zero is not allowed");
+    }
+    a / b
+}
+\end{Code}
+\subsection{Creating Custom Error Types}
 
 \begin{Code}
 use std::fmt;
@@ -1011,7 +1020,7 @@ impl fmt::Display for MyError {
 \end{Code}
 
 
-\section{Logging}
+\subsection{Logging}
 
 The `log` crate provides a lightweight logging facade. To use it:
 
@@ -1043,6 +1052,19 @@ fn main() {
     info!(log, "Application started");
 }
 \end{Code}
+
+\section{Crates, Packages and Modules}
+
+\begin{itemize}
+    \item \textbf{Crate:} A binary or library. The smallest unit of code distribution in Rust.
+    \begin{itemize}
+        \item \textbf{Binary Crate:} Produces an executable. Contains a \texttt{main} function. cargo new --bin my\_app
+        \item \textbf{Library Crate:} Provides functionality to be used by other crates. Does not have a \texttt{main} function. cargo new --lib my\_lib
+    \end{itemize}
+    \item \textbf{Package:} A bundle of one or more crates. Managed by Cargo.
+    \item \textbf{Module:} A way to organize code within a crate. Can contain functions, structs, enums, etc.
+\end{itemize}
+
 
 
 % Now, I m writing my own cheatsheet content below
