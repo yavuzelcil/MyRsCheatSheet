@@ -1069,6 +1069,91 @@ fn main() {
     \item \textbf{Module:} A way to organize code within a crate. Can contain functions, structs, enums, etc.
 \end{itemize}
 
+\subsection{Module Organization with mod.rs}
+
+\textbf{Project Structure:}
+\begin{Code}
+src/
+  main.rs
+  network/
+    mod.rs        // Module root
+    server.rs     // Submodule
+    client.rs     // Submodule
+\end{Code}
+
+\textbf{network/mod.rs:}
+\begin{Code}
+// Declare submodules
+pub mod server;
+pub mod client;
+
+// Re-export commonly used items
+pub use server::Server;
+pub use client::Client;
+
+// Module-level function
+pub fn connect() {
+    println!("Connecting...");
+}
+\end{Code}
+
+\textbf{network/server.rs:}
+\begin{Code}
+pub struct Server {
+    pub address: String,
+}
+
+impl Server {
+    pub fn new(addr: String) -> Self {
+        Server { address: addr }
+    }
+    
+    pub fn start(\&self) {
+        println!("Server starting at {}", 
+                 self.address);
+    }
+}
+\end{Code}
+
+\textbf{network/client.rs:}
+\begin{Code}
+pub struct Client {
+    pub name: String,
+}
+
+impl Client {
+    pub fn new(name: String) -> Self {
+        Client { name }
+    }
+    
+    pub fn connect(\&self) {
+        println!("{} connecting...", self.name);
+    }
+}
+\end{Code}
+
+\textbf{main.rs:}
+\begin{Code}
+mod network;
+
+fn main() {
+    // Using re-exported items
+    let server = network::Server::new(
+        "127.0.0.1:8080".to_string()
+    );
+    server.start();
+    
+    // Direct module access
+    let client = network::client::Client::new(
+        "Alice".to_string()
+    );
+    client.connect();
+    
+    // Module function
+    network::connect();
+}
+\end{Code}
+
 
 
 % Now, I m writing my own cheatsheet content below
