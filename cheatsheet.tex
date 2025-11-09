@@ -760,6 +760,7 @@ fn main() {
 \end{Code}
 
 \subsubsection{Mutable Methods}
+Mutable methods are similar to regular methods, but they take a mutable reference to self (\&mut self) instead of an immutable reference (\&self). This allows the method to modify the instance it is called on.
 \begin{Code}
 struct Counter {
     count: u32,
@@ -786,7 +787,62 @@ fn main() {
 }
 \end{Code}
 
-\section{Vector and Match}
+\subsection{Enums}
+An enum is like a list of possible values. Each value in the enum is called a variant.
+\begin{Code}
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+fn main() {
+    let msg = Message::Write(String::from("Hello"));
+    match msg {
+        Message::Quit => println!("Quit message"),
+        Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+        Message::Write(text) => println!("Write message: {}", text),
+        Message::ChangeColor(r, g, b) => println!("Change color to RGB({}, {}, {})", r, g, b),
+    }
+}
+\end{Code}
+
+\subsubsection{Option<T>}
+\begin{itemize}
+    \item Represents an optional value: every Option is either \texttt{Some(value)} and contains a value, or \texttt{None}, and does not.
+    \item Used to handle cases where a value may be absent without using null.
+    \item Helps avoid runtime errors related to null references.
+\end{itemize}
+
+\begin{Code}
+fn main() {
+    let some_number: Option<i32> = Some(5);
+    let no_number: Option<i32> = None;
+}
+\end{Code}
+
+\subsubsection{Result<T, E>}
+\begin{itemize}
+    \item Represents either success (\texttt{Ok(value)}) or failure (\texttt{Err(error)}).
+    \item Used for error handling in Rust.
+\end{itemize}
+\begin{Code}
+fn divide(dividend: f64, divisor: f64) -> Result<f64, String> {
+    if divisor == 0.0 {
+        Err(String::from("Division by zero"))
+    } else {
+        Ok(dividend / divisor)
+    }
+}
+fn main() {
+    match divide(10.0, 2.0) {
+        Ok(result) => println!("Result: {}", result),
+        Err(e) => println!("Error: {}", e),
+    }
+}
+\end{Code}
+
+\section{Vectors}
 \begin{Code}
 fn main() {
     let numbers = vec![1, 2, 3, 4, 5];
@@ -796,10 +852,62 @@ fn main() {
         Some(x) => println!("found: {x}"),
         None => println!("none"),
     }
+
+    // Accessing elements directly
+    let first = numbers[0];
+    println!("First element: {}", first);
+    let second = &numbers[1];
+    println!("Second element: {}", second);
+
+    // Accessing elements safely
+    if let Some(value) = numbers.get(2) {
+        println!("Element at index 2: {}", value);
+    } else {
+        println!("No element at index 2");
+    }
+
+    // Adding elements
+    numbers.push(6);
+
+    // Removing elements
+    let last = numbers.pop();
+
+    // Inserting elements
+    numbers.insert(2, 1); // insert 1 at index 2
+
+    // Removing elements by index
+    numbers.remove(3); // remove element at index 3
+
+    // iterating with indices
+    for (index, value) in numbers.iter().enumerate() {
+        println!("Index: {}, Value: {}", index, value);
+    }
 }
 \end{Code}
 
+\textbf{Notes:}
+\begin{itemize}
+    \item Vectors are heap-allocated, growable arrays.
+    \item Use \texttt{vec![]} macro to create vectors.
+    \item Use \texttt{push} to add elements, \texttt{pop} to remove the last element.
+    \item Access elements using indexing or \texttt{get} method for safe access.
+    \item iter method returns an iterator over references to the elements of the vector.
+    \item iter\_mut method returns an iterator that allows modifying each element.
+    \item into\_iter method consumes the vector and returns an iterator that yields owned elements
+    \item enumerate method returns an iterator that yields pairs of index and reference to the element.
+\end{itemize}
 
+\subsection{Common Vector Methods}
+\begin{itemize}
+    \item \texttt{len()} - Returns the number of elements in the vector.
+    \item \texttt{is\_empty()} - Checks if the vector is empty.
+    \item \texttt{clear()} - Removes all elements from the vector.
+    \item \texttt{remove(index)} - Removes the element at the specified index.
+    \item \texttt{contains(\&value)} - Checks if the vector contains a specific value.
+    \item \texttt{sort()} - Sorts the elements of the vector in ascending order.
+    \item \texttt{reverse()} - Reverses the order of elements in the vector.
+    \item \texttt{extend(iterable)} - Extends the vector by appending elements from an iterable.
+\end{itemize}
 
 
 \section{Creating Custom Error Types}
