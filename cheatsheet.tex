@@ -33,6 +33,8 @@
 
 % Headings
 \usepackage{titlesec}
+\titleformat{\part}[block]{\Large\bfseries\centering\color{blue!80!black}}{\thepart}{0.5em}{}
+\titlespacing*{\part}{0pt}{8pt}{4pt}
 \titlespacing*{\section}{0pt}{4pt}{2pt}
 \titlespacing*{\subsection}{0pt}{3pt}{1pt}
 \titlespacing*{\subsubsection}{0pt}{2pt}{0.5pt}
@@ -97,6 +99,8 @@
 
 % Intro note
 {\footnotesize This template sets up a compact, two-column A4 layout. Listings are configured for small print and good readability.}
+
+\part{RUST BASICS}
 
 \section{Cargo Quick Commands}
 \begin{itemize}
@@ -1068,6 +1072,8 @@ fn main() {
 
 
 % Now, I m writing my own cheatsheet content below
+
+\part{ADVANCED CONCEPTS}
 
 \section{Generics}
 
