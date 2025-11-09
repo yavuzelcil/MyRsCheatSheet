@@ -846,6 +846,11 @@ fn main() {
 \begin{Code}
 fn main() {
     let numbers = vec![1, 2, 3, 4, 5];
+
+    // new method to create an empty vector
+    //
+    //let mut numbers: Vec<i32> = Vec::new();
+
     for n in &numbers { println!("{n}"); }
 
     match numbers.get(10) {
@@ -908,6 +913,78 @@ fn main() {
     \item \texttt{reverse()} - Reverses the order of elements in the vector.
     \item \texttt{extend(iterable)} - Extends the vector by appending elements from an iterable.
 \end{itemize}
+
+\section{Hashmap}
+\begin{itemize}
+    \item HashMap is a collection that stores key-value pairs.
+    \item Keys must be unique and implement the \texttt{Eq} and \texttt{Hash} traits.
+    \item Values can be of any type.
+\end{itemize}
+
+\begin{Code}
+use std::collections::HashMap;
+fn main() {
+    // Creating a new HashMap
+    let mut scores = HashMap::new();
+
+    // Inserting key-value pairs
+    scores.insert(String::from("Alice"), 10);
+    scores.insert(String::from("Bob"), 20);
+
+    // Accessing values
+    if let Some(score) = scores.get("Alice") {
+        println!("Alice's score: {}", score);
+    }
+
+    // Iterating over key-value pairs
+    for (name, score) in &scores {
+        println!("{}: {}", name, score);
+    }
+
+    // Updating values
+    scores.entry(String::from("Alice")).and_modify(|e| *e += 5).or_insert(10);
+
+    // Removing a key-value pair
+    scores.remove("Bob");
+
+    // Create a HashMap from a iterator
+    let teams = vec![String::from("Blue"), String::from("Yellow")];
+    let initial_scores = vec![10, 50];
+    let scores: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
+
+    println!("{:?}", scores);
+}
+\end{Code}
+
+\subsection{Common HashMap Methods}
+\begin{itemize}
+    \item len() - Returns the number of elements in the HashMap.
+    \begin{Code}
+    let mut map = HashMap::new();
+    map.insert("key1", 10);
+    map.insert("key2", 20);
+    println!("Length: {}", map.len()); // Length: 2
+    \end{Code}
+    \item is\_empty() - Checks if the HashMap is empty.
+    \begin{Code}
+    let map: HashMap<&str, i32> = HashMap::new();
+    println!("Is empty: {}", map.is_empty()); // Is empty: true
+    \end{Code}
+    \item remove(\&key) - Removes the key-value pair for the specified key.
+    \begin{Code}
+    let mut map = HashMap::new();
+    map.insert("key1", 10);
+    map.remove("key1");
+    println!("Length after removal: {}", map.len()); // Length after removal: 0
+    \end{Code}
+    \item contains\_key(\&key) - Checks if the HashMap contains the specified
+    \begin{Code}
+    let mut map = HashMap::new();
+    map.insert("key1", 10);
+    println!("Contains key1: {}", map.contains_key("key1")); // Contains key1
+    \end{Code}
+\end{itemize}
+
 
 
 \section{Creating Custom Error Types}
