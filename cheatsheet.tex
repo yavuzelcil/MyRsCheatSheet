@@ -105,21 +105,23 @@
 \section{Cargo Quick Commands}
 \begin{itemize}
   \item \texttt{cargo new myproj} -- Create new binary project
-  \item \texttt{cargo new --lib mylib} -- Create new library crate
-  \item \texttt{cargo new --bin myproj} -- Create new binary project
+  \item \texttt{cargo new ---lib mylib} -- Create new library crate
+  \item \texttt{cargo new ---bin myproj} -- Create new binary project
   \item \texttt{cargo add <crate>} -- Add dependency
-  \item \texttt{cargo add --dev <crate>} -- Add dev-dependency
+  \item \texttt{cargo add ---dev <crate>} -- Add dev-dependency
+  \item \texttt{cargo add <crate> ---features <features>} -- Add crate with features
   \item \texttt{cargo check} -- Check code without building
   \item \texttt{cargo clippy} -- Lint code
-  \item \texttt{cargo doc --open} -- Generate and open docs
+  \item \texttt{cargo doc ---open} -- Generate and open docs
   \item \texttt{cargo run} -- Build and run
-  \item \texttt{cargo run --quiet} -- Quiet run
-  \item \texttt{cargo build --release} -- Optimized build
-  \item \texttt{cargo build --quiet} -- Quiet build
+  \item \texttt{cargo run ---quiet} -- Quiet run
+  \item \texttt{cargo build ---release} -- Optimized build
+  \item \texttt{cargo build ---quiet} -- Quiet build
   \item \texttt{cargo clean} -- Remove build artifacts
   \item \texttt{cargo bench} -- Run benchmarks
   \item \texttt{cargo test} -- Run tests
   \item \texttt{cargo fmt} -- Format code
+  \item \texttt{cargo install ---path .} -- Install binary from current project
 \end{itemize}
 
 \section{Hello, world! (Rust)}
@@ -1154,7 +1156,7 @@ fn main() {
 }
 \end{Code}
 
-
+\section{Debugging}
 
 % Now, I m writing my own cheatsheet content below
 
@@ -1420,26 +1422,48 @@ Static lifetimes are the longest possible lifetimes in Rust. They last for the e
 
 \section{Smart Pointers}
 Smart pointers are data structures that not only act like a pointer but also have additional metadata and capabilities.
+It extends the Rust ownership system to enable more complex memory management patterns.
 
-Single ownership with Box<T>:
+\textbf{Single ownership with Box<T>}:
 \begin{Code}
     fn main() {
+        // Box allocates data on heap
         let b = Box::new(5);
+        // Dereference with *
         println!("b = {}", b);
+        // b is dropped and heap memory freed
     }
 \end{Code}
 
-Shared ownership with Rc<T>:
+\textbf{Shared ownership with Rc<T>}:
 \begin{Code}
     use std::rc::Rc;
 
     fn main() {
+        // Rc enables multiple owners
         let a = Rc::new(5);
+        // Clone the Rc, not the data
         let b = Rc::clone(&a);
+        // Both a and b can access the data
         println!("a = {}, b = {}", a, b);
     }
 \end{Code}
 
+\textbf{Mutable shared ownership with RefCell<T>}:
+\begin{Code}
+    use std::cell::RefCell;
+    fn main() {
+        // RefCell allows interior mutability
+        let data = RefCell::new(5);
+        {
+            // borrow_mut for mutable access
+            let mut value = data.borrow_mut();
+            *value += 1; // modify through reference
+        } // mutable borrow ends here
+        // borrow for immutable access
+        println!("data = {}", data.borrow());
+    }
+\end{Code}
 
 
 
